@@ -1,21 +1,6 @@
----
-- name: Deploy Docker image
-  hosts: localhost
-  become: true
-  become_method: sudo
-  become_user: root
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+- name: Run a simple command
+  hosts: all
+  connection: local
   tasks:
-    - name: Pull the PocketBase Docker image
-      docker_image:
-        name: augustodelg/pocketbase
-        source: pull
-        tag: latest
-
-    - name: Run PocketBase container
-      docker_container:
-        name: pocketbase
-        image: augustodelg/pocketbase:latest
-        state: started
-        restart_policy: always
+    - name: Check disk usage
+      command: df -h
