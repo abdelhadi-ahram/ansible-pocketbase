@@ -1,6 +1,6 @@
 ---
 - name: Deploy Docker image
-  hosts: localservers
+  hosts: servers
   connection: local
   tasks:
     - name: Pull the PocketBase Docker image
