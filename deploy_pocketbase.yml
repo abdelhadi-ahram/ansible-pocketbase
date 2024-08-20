@@ -2,7 +2,8 @@
 - name: Deploy Docker image
   connection: local   
   hosts: localhost
-  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Pull the PocketBase Docker image
       docker_image:
