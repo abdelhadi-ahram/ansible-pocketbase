@@ -1,6 +1,5 @@
 ---
 - name: Deploy Docker image
-  connection: local   
   become: true
   hosts: localhost
   vars:
