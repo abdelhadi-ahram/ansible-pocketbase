@@ -2,6 +2,7 @@
 - name: Deploy Docker image
   connection: local   
   hosts: localhost
+  become: yes
   tasks:
     - name: Pull the PocketBase Docker image
       docker_image:
