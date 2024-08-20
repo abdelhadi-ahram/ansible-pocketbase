@@ -1,6 +1,17 @@
-- name: Run a simple command
-  hosts: all
+---
+- name: Deploy Docker image
+  hosts: localhost
   connection: local
   tasks:
-    - name: Check disk usage
-      command: df -h
+    - name: Pull the PocketBase Docker image
+      docker_image:
+        name: augustodelg/pocketbase
+        source: pull
+        tag: latest
+
+    - name: Run PocketBase container
+      docker_container:
+        name: pocketbase
+        image: augustodelg/pocketbase:latest
+        state: started
+        restart_policy: always
