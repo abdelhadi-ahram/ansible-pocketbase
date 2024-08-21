@@ -1,17 +1,8 @@
 ---
-- name: Deploy Docker image
-  hosts: servers
+- name: Run df -l command on remote hosts
+  hosts: all
   connection: local
   tasks:
-    - name: Pull the PocketBase Docker image
-      docker_image:
-        name: augustodelg/pocketbase
-        source: pull
-        tag: latest
-
-    - name: Run PocketBase container
-      docker_container:
-        name: pocketbase
-        image: augustodelg/pocketbase:latest
-        state: started
-        restart_policy: always
+    - name: Display disk usage of local filesystems
+      command: df -l
+      register: df_output
