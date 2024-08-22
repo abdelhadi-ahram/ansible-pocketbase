@@ -1,8 +1,25 @@
 ---
-- name: Run df -l command on remote hosts
+- name: Build and run PocketBase Docker container
   hosts: all
   connection: local
   tasks:
-    - name: Display disk usage of local filesystems
-      command: df -l
-      register: df_output
+    - name: Build PocketBase Docker image
+      docker_image:
+        name: {{ host_name }}
+        source: build
+        build:
+          path: .
+          args:
+            PORT: {{ port }}
+            PB_VERSION: {{ pb_version }}
+        state: present
+        force_tag: true
+
+    - name: Run PocketBase Docker container
+      docker_container:
+        name: {{ host_name }}
+        image: {{ host_name }}:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ port }}:{{ port }}"
