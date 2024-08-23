@@ -5,21 +5,20 @@
   tasks:
     - name: Build PocketBase Docker image
       docker_image:
-        name: {{ host_name }}
+        name: "{{ host_name }}"
         source: build
         build:
           path: .
           args:
-            PORT: {{ port }}
-            PB_VERSION: {{ pb_version }}
+            PB_VERSION: "{{ pb_version }}"
         state: present
         force_tag: true
 
     - name: Run PocketBase Docker container
       docker_container:
-        name: {{ host_name }}
-        image: {{ host_name }}:latest
+        name: "{{ host_name }}"
+        image: "{{ host_name }}:latest"
         state: started
         restart_policy: always
         ports:
-          - "{{ port }}:{{ port }}"
+          - "{{ port }}:8090"
