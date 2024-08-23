@@ -1,7 +1,0 @@
----
-- name: test
-  hosts: all
-  connection: local
-  tasks:
-    - name: Testing extra vars
-      command: echo "the port is {{ port }}"
