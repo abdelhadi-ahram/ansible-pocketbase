@@ -8,7 +8,7 @@
         name: "pocketbase-{{ pb_version }}"
         source: build
         build:
-          path: .
+          path: /home/abdelhadi/projects/web/deploypocket/playbooks
           args:
             PB_VERSION: "{{ pb_version }}"
         state: present
