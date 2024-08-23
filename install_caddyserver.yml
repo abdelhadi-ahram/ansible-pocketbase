@@ -18,7 +18,7 @@
         state: started
         restart_policy: always
         volumes:
-          - "{{ caddy_dir }}/Caddyfile:/etc/caddy/Caddyfile"
+          - "{{ caddy_dir }}/Caddyfile:/etc/caddy/Caddyfile:ro"
           - "{{ caddy_dir }}/site:/srv"
           - "{{ caddy_dir }}/data:/data"
           - "{{ caddy_dir }}/config:/config"
