@@ -4,6 +4,11 @@
   connection: local
 
   tasks:
+    - name: Create a Docker network
+      docker_network:
+        name: caddy_network
+        driver: bridge
+
     - name: Pull Caddy image
       docker_image:
         name: caddy:latest
@@ -26,3 +31,5 @@
           - "80:80"
           - "443:443"
           - "443:443/udp"
+        networks:
+          - name: caddy_network
