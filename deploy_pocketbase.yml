@@ -16,9 +16,7 @@
 
     - name: Run PocketBase Docker container
       docker_container:
-        name: "{{ host_name }}"
+        name: "{{ instance_code }}"
         image: "pocketbase-{{ pb_version }}:latest"
         state: started
         restart_policy: always
-        ports:
-          - "{{ port }}:8090"
