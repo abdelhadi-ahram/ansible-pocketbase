@@ -1,11 +1,14 @@
+---
 - name: Install Caddy Server
   hosts: all
-  local: true
+  connection: local
 
   tasks:
     - name: Pull Caddy image
       docker_image:
         name: caddy:latest
+        tag: latest
+        source: pull
         state: present
 
     - name: Run Caddy in a Docker container
@@ -13,14 +16,13 @@
         name: caddyserver
         image: caddy:latest
         state: started
+        restart_policy: always
+        volumes:
+          - "{{ caddy_dir }}/Caddyfile:/etc/caddy/Caddyfile"
+          - "{{ caddy_dir }}/site:/srv"
+          - "{{ caddy_dir }}/data:/data"
+          - "{{ caddy_dir }}/config:/config"
         ports:
           - "80:80"
           - "443:443"
           - "443:443/udp"
-
-        volumes:
-          - "{{ coddy_dir }}/Caddyfile:/etc/caddy/Caddyfile"
-          - "{{ coddy_dir }}/site:/srv"
-          - "{{ coddy_dir }}:/data"
-          - "{{ coddy_dir }}:/config"
-        
