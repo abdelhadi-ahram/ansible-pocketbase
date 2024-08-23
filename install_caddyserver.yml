@@ -1,4 +1,4 @@
-- name: Install Caddy Server in Docker
+- name: Install Caddy Server
   hosts: all
   local: true
 
@@ -8,19 +8,19 @@
         name: caddy:latest
         state: present
 
-    - name: Create a Caddyfile
-      template:
-        src: caddyfile.j2
-        dest: /tmp/Caddyfile
-        mode: 0644
-
     - name: Run Caddy in a Docker container
       docker_container:
         name: caddyserver
         image: caddy:latest
         state: started
         ports:
-          - published: 80
-            target: 80
+          - "80:80"
+          - "443:443"
+          - "443:443/udp"
+
         volumes:
-          - /tmp/Caddyfile:/etc/caddy/Caddyfile:ro
+          - "{{ coddy_dir }}/Caddyfile:/etc/caddy/Caddyfile"
+          - "{{ coddy_dir }}/site:/srv"
+          - "{{ coddy_dir }}:/data"
+          - "{{ coddy_dir }}:/config"
+        
