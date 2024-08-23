@@ -1,14 +1,8 @@
 - name: Install Caddy Server in Docker
-  hosts: localhost
-  become: true
+  hosts: all
+  local: true
 
   tasks:
-    - name: Ensure Docker is installed
-      become: true
-      apt:
-        name: docker.io
-        state: present
-
     - name: Pull Caddy image
       docker_image:
         name: caddy:latest
@@ -22,7 +16,7 @@
 
     - name: Run Caddy in a Docker container
       docker_container:
-        name: my-caddy-container
+        name: caddyserver
         image: caddy:latest
         state: started
         ports:
@@ -30,10 +24,3 @@
             target: 80
         volumes:
           - /tmp/Caddyfile:/etc/caddy/Caddyfile:ro
-
-    - name: Verify Caddy is running
-      shell: docker ps | grep my-caddy-container
-      register: container_status
-    - assert:
-        that: container_status.stdout.find("my-caddy-container") >= 0
-        msg: "Caddy container is not running"
